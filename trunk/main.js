@@ -1,4 +1,3 @@
-console.log("Init");
 
 var roleHarvester = require('harvester.js');
 var roleUpgrader = require('upgrader.js');
