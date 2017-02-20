@@ -9,7 +9,7 @@ console.log("Init");
 
 module.exports.loop = function() {
     
-    var hostiles = Game.rooms['E3S87'].find(FIND_HOSTILE_CREEPS);
+    var hostiles = Game.rooms['E13S83'].find(FIND_HOSTILE_CREEPS);
     //hostiles = [];
     
     if(hostiles.length > 0) {
@@ -27,28 +27,41 @@ module.exports.loop = function() {
     var harvesterCount = _.filter(Game.creeps, {memory : { role : "harvester"}}).length;
     var upgraderCount = _.filter(Game.creeps, {memory : { role : "upgrader"}}).length;
     var builderCount = _.filter(Game.creeps, {memory : { role : "builder"}}).length;
+    var minerCount = _.filter(Game.creeps, {memory : { role : "miner"}}).length;
+    var carrierCount = _.filter(Game.creeps, {memory : { role : "carrier"}}).length;
     
-    //console.log("h:", harvesterCount, " u:", upgraderCount, " b:", builderCount);
+    //console.log("h:", harvesterCount, " u:", upgraderCount, " b:", builderCount, " m:", minerCount, " c:", carrierCount);
     
     if (harvesterCount === 0) {
         Game.spawns.Home.createCreep([WORK, WORK, CARRY, MOVE], {role:"harvester"});
         console.log("Building a harvester tiny " + (harvesterCount + 1));
     
         
-    } else if (harvesterCount < 4) {
-        if (Game.spawns.Home.canCreateCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE]) == OK) {
-            Game.spawns.Home.createCreep([WORK, WORK, WORK, WORK, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], {role:"harvester"});
+    } else if (harvesterCount < 2) {
+        if (Game.spawns.Home.canCreateCreep([WORK, WORK, CARRY, MOVE]) == OK) {
+            Game.spawns.Home.createCreep([WORK, WORK, CARRY, MOVE], ("Harvester" + Game.time.toString()), {role:"harvester"});
             console.log("Building a harvester " + (harvesterCount + 1));
         }
-    } else if (upgraderCount < 2) {
-        if (Game.spawns.Home.canCreateCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE]) == OK) {
-            Game.spawns.Home.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], {role:"upgrader"});
+        
+    } else if (minerCount < 2) {
+        if (Game.spawns.Home.canCreateCreep([WORK, WORK, CARRY, MOVE]) == OK) {
+            Game.spawns.Home.createCreep([WORK, WORK, CARRY, MOVE], ("Miner" + Game.time.toString()), {role:"miner"});
+            console.log("Building a miner " + (minerCount + 1));
+        }
+    } else if (carrierCount < 4) {
+        if (Game.spawns.Home.canCreateCreep([WORK, WORK, CARRY, MOVE]) == OK) {
+            Game.spawns.Home.createCreep([WORK, WORK, CARRY, MOVE], ("Carrier" + Game.time.toString()), {role:"carrier"});
+            console.log("Building a carrier " + (carrierCount + 1));
+        }
+    } else if (upgraderCount < 4) {
+        if (Game.spawns.Home.canCreateCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE]) == OK) {
+            Game.spawns.Home.createCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], ("Upgrader" + Game.time.toString()), {role:"upgrader"});
             console.log("Building a upgrader " + (upgraderCount + 1));
         }
-    } else if (builderCount < 5) {
+    } else if (builderCount < 2) {
         
-        if (Game.spawns.Home.canCreateCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE]) == OK) {
-            Game.spawns.Home.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], {role:"builder"});
+        if (Game.spawns.Home.canCreateCreep([WORK, WORK, CARRY, MOVE]) == OK) {
+            Game.spawns.Home.createCreep([WORK, WORK, CARRY, MOVE], ("Builder" + Game.time.toString()), {role:"builder"});
             console.log("Building a builder " + (builderCount + 1));
         }
     }

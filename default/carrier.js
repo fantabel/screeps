@@ -25,9 +25,20 @@ var roleCarrier = {
         }
         else {
             var sources = creep.room.find(FIND_DROPPED_ENERGY);
-            creep.say(sources.length);
-            if(creep.pickup(sources[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ff0000', opacity : 1, style:"dotted"}});
+            
+            if (sources.length) {
+                if (creep.pickup(sources[0]) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ff0000', opacity : 1, style:"dotted"}});
+                }
+            } else {
+                var containers = creep.room.find(FIND_STRUCTURES, {
+                filter: (i) => i.structureType == STRUCTURE_CONTAINER && 
+                   i.store[RESOURCE_ENERGY] > 0 });
+                if (containers.length) {
+                    if (creep.withdraw(containers[0], RESOURCE_ENERGY, creep.carryCapacity) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(containers[0], {stroke: "#00ff00", opacity:0.9})
+                    }
+                }
             }
         }
         
