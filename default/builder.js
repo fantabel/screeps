@@ -61,11 +61,19 @@ var roleBuilder = {
                 }
             }*/
             
-            
+            var containers = creep.room.find(FIND_STRUCTURES, {
+                filter: (i) => i.structureType == STRUCTURE_CONTAINER && 
+                   i.store[RESOURCE_ENERGY] > 0 });
+            if (containers.length) {
+                if (creep.withdraw(containers[0], RESOURCE_ENERGY, creep.carryCapacity) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(containers[0], {stroke: "#00ff00", opacity:0.9})
+                }
+            }
+                /*
             var sources = creep.room.find(FIND_SOURCES);
             if(creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(sources[1], {visualizePathStyle: {stroke: '#ffaa00'}});
-            }
+            }*/
         }
     }
 };

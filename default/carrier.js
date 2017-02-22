@@ -41,8 +41,19 @@ var roleCarrier = {
                 }
             }
         }
-        
     }
+    /*
+    buildOne = function() {
+        console.log("Creating creep.")
+    }*/
 };
 
 module.exports = roleCarrier;
+
+var moo = {
+  buildOne: function() {
+      console.log("Creating creep.")
+  }
+}
+
+//module.exports = moo;

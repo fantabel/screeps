@@ -4,6 +4,10 @@ var roleUpgrader = require('upgrader');
 var roleBuilder = require('builder');
 var roleMiner = require('miner');
 var roleCarrier = require('carrier');
+var moduleTest = require('moduleTest');
+
+moduleTest.fun1();
+moduleTest.fun2();
 
 console.log("Init");
 
@@ -53,7 +57,7 @@ module.exports.loop = function() {
             Game.spawns.Home.createCreep([WORK, WORK, CARRY, MOVE], ("Carrier" + Game.time.toString()), {role:"carrier"});
             console.log("Building a carrier " + (carrierCount + 1));
         }
-    } else if (upgraderCount < 4) {
+    } else if (upgraderCount < 3) {
         if (Game.spawns.Home.canCreateCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE]) == OK) {
             Game.spawns.Home.createCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], ("Upgrader" + Game.time.toString()), {role:"upgrader"});
             console.log("Building a upgrader " + (upgraderCount + 1));
